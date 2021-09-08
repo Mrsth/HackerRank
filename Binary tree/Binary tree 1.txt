@@ -1,0 +1,16 @@
+select N, 
+    case
+        when (P is null) then "Root"
+        when (N in (select distinct P from BST)) then "Inner"
+        else "Leaf"
+    end    
+from BST order by N asc;
+
+
+--HINTS
+P = parent of N
+N = Value of a node
+
+If P in null i.e. no parent then the node is "Root" node.
+If N in in a list of P then N is "Inner" node. Because N is a parent of some other node.
+Else "Leaf" node.

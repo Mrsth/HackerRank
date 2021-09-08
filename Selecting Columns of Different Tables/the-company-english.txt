@@ -1,0 +1,36 @@
+select company_code, founder, 
+(
+    select count(distinct lead_manager_code) from Lead_Manager as lm
+    where lm.company_code = c.company_code 
+),
+(
+    select count(distinct senior_manager_code) from Senior_Manager as sm
+    where sm.company_code = c.company_code
+),
+(
+    select count(distinct manager_code) from Manager as m
+    where c.company_code = m.company_code
+),
+(
+    select count(distinct employee_code) from Employee as e
+    where c.company_code = e.company_code
+)
+from Company as c
+order by c.company_code;
+
+--Explanation
+For a company c1 and its founder we have to find their:
+- Total number of lead manager
+- Total number of senior manager
+- Total number of manager
+- Total number of employee
+
+i.e. Monika C1 Company has:
+- 1 lead manager
+- 2 senior manager
+- 1 manager
+- 2 employee
+
+So the Company table is linked with every other table. Hence, for finding
+total number of lead manager of any company, link company table with lead manager table.
+For finding total number of senior manager any company, link company table with senior manager table and so on.
